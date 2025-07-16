@@ -57,4 +57,12 @@ describe('POST /api/v1/sweet/restock', () => {
 
         expect(res.statusCode).toBe(404);
     });
+
+    it('returns 400 for missing fields', async () => {
+        const res = await request(app)
+            .post(endpoint)
+            .send({ sweetId });
+
+        expect(res.statusCode).toBe(400);
+    });
 });
