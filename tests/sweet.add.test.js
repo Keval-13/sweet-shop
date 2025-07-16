@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../src/app.js';
 
-describe('POST /sweets', () => {
+describe('POST /api/v1/sweets', () => {
     const endpoint = '/api/v1/sweet';
 
     beforeAll(async () => {
