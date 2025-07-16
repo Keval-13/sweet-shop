@@ -101,7 +101,7 @@ function SweetView() {
             </div>}
 
             {/* For filter and search */}
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-2">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-2">
                 {/* Name Search */}
                 <input
                     type="text"
@@ -141,10 +141,16 @@ function SweetView() {
                 {/* Search Button */}
                 <button
                     onClick={handleSearch} disabled={loader}
-                    className="flex items-center justify-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                    className="flex items-center justify-center gap-2 cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                 >
                     <Search size={16} />
                     Search
+                </button>
+                <button
+                    onClick={handleSearch} disabled={loader}
+                    className="flex items-center justify-center gap-2 cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                >
+                    Clear filter
                 </button>
             </div>
 
