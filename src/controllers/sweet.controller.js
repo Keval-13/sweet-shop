@@ -24,7 +24,7 @@ const addSweet = async (req, res) => {
 
         const sweet = await Sweet.create({ name, category, price, quantity });
 
-        return res.status(201).json(sweet);
+        return res.status(201).json({ message: "Sweets add successful", sweet });
     } catch (err) {
         console.log("Error in creating sweet");
         console.error(err);
@@ -42,7 +42,7 @@ const deleteSweet = async (req, res) => {
             return res.status(404).json({ error: 'Sweet not found' });
         }
 
-        return res.status(200).json(deletedSweetRes);
+        return res.status(200).json({ message: "Sweets delete successful", deletedSweetRes });
     } catch (err) {
         console.log("Error in deleting sweet");
         console.error(err);
@@ -70,9 +70,10 @@ const getSweets = async (req, res) => {
             if (maxPrice) filter.price.$lte = Number(maxPrice);
         }
 
-        const sweetsRes = await Sweet.find(filter);
+        // If user apply any filter then return document based upon the filter else return all the d
+        const sweetsRes = await Sweet.find(filter); 
 
-        return res.status(200).json(sweetsRes);
+        return res.status(200).json({ message: "Sweets fetch successful", sweetsRes });
     } catch (err) {
         console.log("Error in fetching sweets");
         console.error(err);
@@ -99,8 +100,9 @@ const purchaseSweet = async (req, res) => {
             return res.status(400).json({ error: "Insufficient quantity" });
         }
 
-        sweet.quantity -= quantity;
-        await sweet.save();
+        sweet.quantity -= quantity; // In-place document update
+
+        await sweet.save(); // Persist the modified document
 
         return res.status(200).json({ message: "Purchase successful", sweet });
     } catch (err) {
@@ -111,33 +113,41 @@ const purchaseSweet = async (req, res) => {
 };
 
 const restockSweets = async (req, res) => {
-    const { sweetId, quantity } = req.body;
+    try {
+        const { sweetId, quantity } = req.body;
 
-    if (sweetId == null || quantity == null) {
-        return res.status(400).json({ error: 'All fields are required' });
+        if (sweetId == null || quantity == null) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        const parsedQuantity = Number(quantity);
+
+        // For validate that quantity must be number
+        if (isNaN(parsedQuantity)) {
+            return res.status(400).json({ error: 'Quantity must be valid numbers' });
+        }
+
+        if (parsedQuantity < 0) {
+            return res.status(400).json({ error: 'Quantity must be ≥ 0' });
+        }
+
+        const sweetRes = await Sweet.findById(sweetId);
+
+        // If sweet with given id not found then return 404
+        if (!sweetRes) {
+            return res.status(404).json({ error: 'Sweet not found!' }); 
+        }
+
+        sweetRes.quantity += parsedQuantity;
+
+        await sweetRes.save();
+
+        return res.status(200).json({ message: "Restock successful", sweetRes });
+    } catch (error) {
+        console.log("Error in restock sweet");
+        console.error(err);
+        return res.status(500).json({ error: "Server error" });
     }
-
-    const parsedQuantity = Number(quantity);
-
-    if (isNaN(parsedQuantity)) {
-        return res.status(400).json({ error: 'Quantity must be valid numbers' });
-    }
-
-    if (parsedQuantity < 0) {
-        return res.status(400).json({ error: 'Quantity must be ≥ 0' });
-    }
-
-    const sweetRes = await Sweet.findById(sweetId);
-
-    if (!sweetRes) {
-        return res.status(404).json({ error: 'Sweet not found!' });
-    }
-
-    sweetRes.quantity += parsedQuantity;
-
-    await sweetRes.save();
-
-    return res.status(200).json({ message: "Restock successful", sweetRes });
 };
 
 export { addSweet, deleteSweet, getSweets, purchaseSweet, restockSweets };
