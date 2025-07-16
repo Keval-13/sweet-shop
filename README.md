@@ -87,11 +87,21 @@ Run & See [`test-report.html`](./sweet-shop-backend/test-report.html) for full t
 
 ## 🌐 Frontend Preview
 
-![Frontend Screenshot 1](./assets/frontend1.png)
+![Frontend Screenshot 1](assets/frontend-1.png)
 
-![Frontend Screenshot 2](./assets/frontend2.png)
+![Frontend Screenshot 2](assets/frontend-2.png)
+
+![Frontend Screenshot 3](assets/frontend-3.png)
+
+![Frontend Screenshot 4](assets/frontend-4.png)
+
+![Frontend Screenshot 5](assets/frontend-5.png)
+
+![Frontend Mobile View Screenshot 1](assets/mobile-view-1.png)
+
+![Frontend Mobile View Screenshot 2](assets/mobile-view-2.png)
 
 ## 🧪 Test Report Screenshot
 
-![Test Report](./assets/test-report.png)
+![Test Report](assets/test-report.png)
 
