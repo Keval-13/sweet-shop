@@ -42,4 +42,16 @@ const deleteSweet = async (req, res) => {
     }
 };
 
-export { addSweet, deleteSweet };
+const getSweets = async (req, res) => {
+    try {
+        const sweetsRes = await Sweet.find({});
+    
+        return res.status(200).json(sweetsRes);
+    } catch (err) {
+        console.log("Error in fetching sweets");
+        console.error(err);
+        return res.status(500).json({ error: 'Server error' });
+    }
+}
+
+export { addSweet, deleteSweet, getSweets };
