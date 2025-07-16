@@ -8,6 +8,18 @@
     "dev": "nodemon src/index.js",
     "test": "jest"
   },
+  "jest": {
+    "reporters": [
+      "default",
+      [
+        "jest-html-reporter",
+        {
+          "pageTitle": "Sweet Shop Test Report",
+          "outputPath": "test-report.html"
+        }
+      ]
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -18,6 +30,7 @@
     "@types/jest": "^30.0.0",
     "babel-jest": "^30.0.4",
     "jest": "^30.0.4",
+    "jest-html-reporter": "^4.3.0",
     "mongodb-memory-server": "^10.1.4",
     "supertest": "^7.1.3"
   },

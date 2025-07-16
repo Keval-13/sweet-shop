@@ -36,22 +36,22 @@ describe("GET /api/v1/sweet (Search)", () => {
     it('return sweets by name and 200 status', async () => {
         const sweetRes = await request(app).get(`${endpoint}?name=gulab jamun`);
         expect(sweetRes.statusCode).toBe(200);
-        expect(sweetRes.body.length).toBe(1);
-        expect(sweetRes.body[0].name.toLowerCase()).toContain('gulab jamun');
+        expect(sweetRes.body.sweetsRes.length).toBe(1);
+        expect(sweetRes.body.sweetsRes[0].name.toLowerCase()).toContain('gulab jamun');
     });
 
     it('return sweets by category and 200 status', async () => {
         const sweetRes = await request(app).get(`${endpoint}?category=nut-based`);
         expect(sweetRes.statusCode).toBe(200);
-        expect(sweetRes.body.length).toBe(1);
-        expect(sweetRes.body[0].category.toLowerCase()).toBe('nut-based');
+        expect(sweetRes.body.sweetsRes.length).toBe(1);
+        expect(sweetRes.body.sweetsRes[0].category.toLowerCase()).toBe('nut-based');
     });
 
     it('return sweets within a price range and 200 status', async () => {
         const sweetRes = await request(app).get(`${endpoint}?minPrice=12&maxPrice=20`);
         expect(sweetRes.statusCode).toBe(200);
-        expect(sweetRes.body.length).toBe(1);
-        expect(sweetRes.body[0].name).toBe('Gulab Jamun');
+        expect(sweetRes.body.sweetsRes.length).toBe(1);
+        expect(sweetRes.body.sweetsRes[0].name.toLowerCase()).toContain('gulab jamun');
     });
 
     it('return all sweets if no query is given and 200 status', async () => {
@@ -62,6 +62,6 @@ describe("GET /api/v1/sweet (Search)", () => {
     it('return empty array if no match found and 200 status', async () => {
         const sweetRes = await request(app).get(`${endpoint}?name=nonexistent`);
         expect(sweetRes.statusCode).toBe(200);
-        expect(sweetRes.body).toEqual([]);
+        expect(sweetRes.body.sweetsRes).toEqual([]);
     });
 });

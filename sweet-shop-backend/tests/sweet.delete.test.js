@@ -36,7 +36,7 @@ describe("DELETE /api/v1/sweets", () => {
             .send(payload)
             .set('Accept', 'application/json');
 
-        const sweetId = createdSweetRes.body._id;
+        const sweetId = createdSweetRes.body.sweet._id;
 
         const deletedSweetRes = await request(app).delete(`${endpoint}/${sweetId}`)
 

@@ -37,7 +37,11 @@ describe('POST /api/v1/sweets', () => {
 
         expect(res.statusCode).toBe(201);
         expect(res.headers['content-type']).toMatch(/json/);
-        expect(res.body).toEqual(expect.objectContaining(payload));
+        expect(res.body).toMatchObject({
+            message: 'Sweets add successful',
+            sweet: expect.objectContaining(payload),
+        });
+
     });
 
     it('rejects when fields are missing', async () => {
