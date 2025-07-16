@@ -52,8 +52,26 @@ const deleteSweet = async (req, res) => {
 
 const getSweets = async (req, res) => {
     try {
-        const sweetsRes = await Sweet.find({});
+        const { name, category, minPrice, maxPrice } = req.query;
 
+        const filter = {};
+
+        if (name) {
+            filter.name = { $regex: new RegExp(name, 'i') }; // case-insensitive partial match
+        }
+
+        if (category) {
+            filter.category = { $regex: new RegExp(category, 'i') };
+        }
+
+        if (minPrice || maxPrice) {
+            filter.price = {};
+            if (minPrice) filter.price.$gte = Number(minPrice);
+            if (maxPrice) filter.price.$lte = Number(maxPrice);
+        }
+
+        const sweetsRes = await Sweet.find(filter);
+        
         return res.status(200).json(sweetsRes);
     } catch (err) {
         console.log("Error in fetching sweets");
