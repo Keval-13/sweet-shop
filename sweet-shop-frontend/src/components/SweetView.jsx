@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Search } from 'lucide-react';
 import { getSweets, purchaseSweet } from "../api/features.js"
 import Toast from '../utils/Toast.jsx';
+import Loader from '../utils/Loader.jsx';
 
 function SweetView() {
     const [allSweets, setAllSweets] = useState([]);
@@ -43,6 +44,7 @@ function SweetView() {
     // For purchase the sweet api
     const handlePurchase = async () => {
         try {
+            setLoader(true);
             setModal(false);
             const purchasedSweet = await purchaseSweet({ sweetId: selectedSweetId, quantity })
             setMessage(purchasedSweet.message)
@@ -51,6 +53,7 @@ function SweetView() {
             setMessage(error.response.data.error)
             setShowToast(true);
         } finally {
+            setLoader(false);
             setQuantity("");
             setSelectedSweetId(null);
         }
@@ -68,6 +71,8 @@ function SweetView() {
 
     return (
         <div className="relative w-full h-full pt-5 flex flex-col gap-5">
+            {/* Loader (showing loading effect) */}
+            {loader && <Loader />}
             {/* For showing messages */}
             <Toast message={message} showToast={showToast} setShowToast={setShowToast} />
 

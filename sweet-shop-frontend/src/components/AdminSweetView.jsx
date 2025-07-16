@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react';
 import { Trash } from 'lucide-react';
 import Toast from '../utils/Toast.jsx';
 import { addSweet, deleteSweet, getSweets, restockSweet } from '../api/features.js';
+import Loader from "../utils/Loader.jsx"
 
 function AdminSweetView() {
   const [modal, setModal] = useState(false); // For identifying modal need to open or close
@@ -24,11 +25,14 @@ function AdminSweetView() {
   // For fetching all the sweets
   const getAllSweets = async () => {
     try {
+      setLoader(true);
       const sweetRes = await getSweets({});
       setAllSweets(sweetRes.sweetsRes);
     } catch (error) {
       setMessage(error.response.data.error);
       setShowToast(true);
+    } finally {
+      setLoader(false);
     }
   }
 
@@ -64,6 +68,7 @@ function AdminSweetView() {
   // For deleting the sweet
   const handleDeleteSweet = async () => {
     try {
+      setLoader(true);
       setModal(false);
       const deletedSweetRes = await deleteSweet({ sweetId: selectedSweetId });
       setMessage(deletedSweetRes.message);
@@ -74,15 +79,19 @@ function AdminSweetView() {
         await getAllSweets();
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error.response.data.error)
+      setMessage(error.response.data.error);
+      setShowToast(true);
+    } finally {
+      setLoader(false);
     }
   }
 
   // For restock the sweets
   const handleRestock = async () => {
     setModal(false);
-
     try {
+      setLoader(true);
       const restockedSweet = await restockSweet({ sweetId: selectedSweetId, quantity });
 
       setMessage(restockedSweet.message);
@@ -94,7 +103,10 @@ function AdminSweetView() {
       }
     } catch (error) {
       console.log(error.response.data.error)
+      setMessage(error.response.data.error);
+      setShowToast(true);
     } finally {
+      setLoader(false);
       setQuantity("");
       setSelectedSweetId(null);
     }
@@ -106,6 +118,9 @@ function AdminSweetView() {
 
   return (
     <div className="relative w-full h-full pt-5 flex flex-col gap-5">
+      {/* Loader (showing loading effect) */}
+      {loader && <Loader />}
+
       {/* For showing messages */}
       <Toast message={message} showToast={showToast} setShowToast={setShowToast} />
 
