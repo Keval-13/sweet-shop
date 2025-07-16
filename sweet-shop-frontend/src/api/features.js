@@ -10,7 +10,7 @@ const addSweet = async (data) => {
 };
 
 // For deleting sweet
-const deleteSweet = async (sweetId) => {
+const deleteSweet = async ({sweetId}) => {
   const res = await axios.delete(`${BASE_URL}/${sweetId}`);
   return res.data;
 };

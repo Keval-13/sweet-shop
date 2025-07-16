@@ -4,15 +4,15 @@ import { getSweets, purchaseSweet } from "../api/features.js"
 import Toast from '../utils/Toast.jsx';
 
 function SweetView() {
-    const [sweets, setSweets] = useState([]);
-    const [modal, setModal] = useState(false);
-    const [loader, setLoader] = useState(false);
-    const [quantity, setQuantity] = useState("");
-    const [selectedSweetId, setSelectedSweetId] = useState(null);
-    const [showToast, setShowToast] = useState(false);
-    const [message, setMessage] = useState("");
+    const [allSweets, setAllSweets] = useState([]);
+    const [modal, setModal] = useState(false); // For identifying modal need to open or close
+    const [loader, setLoader] = useState(false); // For storing state of loader
+    const [quantity, setQuantity] = useState(""); // Holds quantity which use while restock
+    const [selectedSweetId, setSelectedSweetId] = useState(null); // Holds id of sweet for deleting and restock
+    const [showToast, setShowToast] = useState(false); // Store when to show message(Toast)
+    const [message, setMessage] = useState(""); // Store message that display in message(Toast)
 
-    const [filters, setFilters] = useState({
+    const [filters, setFilters] = useState({ // For storing value of filter like search by name, price, category
         name: '',
         category: '',
         minPrice: '',
@@ -20,11 +20,11 @@ function SweetView() {
     });
 
     // Actual call for get sweets
-    const getSweet = async () => {
+    const getAllSweets = async () => {
         try {
             setLoader(true);
             const sweetRes = await getSweets(filters);
-            setSweets(sweetRes.sweetsRes);
+            setAllSweets(sweetRes.sweetsRes);
         } catch (error) {
             console.log(error.response.data.error);
             setMessage(error.response.data.error)
@@ -58,25 +58,25 @@ function SweetView() {
 
     // For search and sort functionality api
     const handleSearch = () => {
-        getSweet();
+        getAllSweets();
     };
 
     // To load all sweets when page load
     useEffect(() => {
-        getSweet();
+        getAllSweets();
     }, []);
 
     return (
         <div className="relative w-full h-full pt-5 flex flex-col gap-5">
             {/* For showing messages */}
             <Toast message={message} showToast={showToast} setShowToast={setShowToast} />
-            
+
             {/* Modal overlay */}
             {modal && <div onClick={() => setModal(false)} className="fixed inset-0 bg-black/20 bg-opacity-80 backdrop-blur-[1px] flex justify-center items-center z-50">
                 <div
                     onClick={(e) => e.stopPropagation()}
                     className="flex flex-col gap-2 bg-white p-6 rounded-md shadow-md w-80">
-                    <h2 className="text-lg font-semibold mb-4">Enter Quantity</h2>
+                    <h2 className="text-lg font-semibold mb-4">Are you sure ?</h2>
                     <input
                         type="text"
                         placeholder="Enter quantity..."
@@ -84,8 +84,14 @@ function SweetView() {
                         value={quantity}
                         onChange={(e) => setQuantity(e.target.value)}
                     />
-                    <button onClick={handlePurchase} className='w-full cursor-pointer border border-gray-300 px-3 py-2 rounded-md bg-green-400 hover:bg-green-500 duration-200' >Submit</button>
-                    <button onClick={() => setModal(false)} className='w-full cursor-pointer border border-gray-300 px-3 py-2 rounded-md bg-red-400 hover:bg-red-500 duration-200' >Cancel</button>
+                    <button onClick={handlePurchase}
+                        className='w-full cursor-pointer border border-gray-300 px-3 py-2 rounded-md bg-green-400 hover:bg-green-500 text-white'
+                    >Purchase
+                    </button>
+                    <button onClick={() => setModal(false)}
+                        className='w-full cursor-pointer border border-gray-300 px-3 py-2 rounded-md bg-red-400 hover:bg-red-500 text-white'
+                    >Cancel
+                    </button>
                 </div>
             </div>}
 
@@ -138,7 +144,7 @@ function SweetView() {
             </div>
 
             {/* To display sweets */}
-            <div className="overflow-hidden border border-gray-300 rounded-md">
+            <div className="overflow-hidden border border-gray-300 rounded-md shadow-md">
                 <table className="min-w-full table-auto">
                     <thead className="bg-blue-50 text-left">
                         <tr className="first:rounded-t-md">
@@ -150,19 +156,19 @@ function SweetView() {
                     </thead>
                     <tbody>
                         {
-                            sweets.length > 0 && sweets.map(sweet => {
+                            allSweets.length > 0 ? allSweets.map(sweet => {
                                 return (
                                     <tr key={sweet._id} className="border-t">
                                         <td className="px-4 py-2">{sweet.name}</td>
                                         <td className="px-4 py-2">{sweet.category}</td>
-                                        <td className="px-4 py-2">{sweet.price} rs/kg</td>
+                                        <td className="px-4 py-2">{sweet.price}</td>
                                         <td className="px-4 py-2 flex justify-center gap-2">
                                             <button
                                                 onClick={() => {
                                                     setSelectedSweetId(sweet._id);
                                                     setModal(true)
                                                 }}
-                                                className="flex items-center gap-1 bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md"
+                                                className="flex items-center gap-1 bg-green-500 hover:bg-green-600 cursor-pointer text-white px-3 py-1 rounded-md"
                                             >
                                                 Purchase
                                             </button>
@@ -170,6 +176,10 @@ function SweetView() {
                                     </tr>
                                 )
                             })
+                                :
+                                <tr className="border-t">
+                                    <td className="px-4 py-2 text-center" colSpan={4}>No sweets</td>
+                                </tr>
                         }
                     </tbody>
                 </table>
