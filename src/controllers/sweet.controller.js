@@ -80,4 +80,34 @@ const getSweets = async (req, res) => {
     }
 }
 
-export { addSweet, deleteSweet, getSweets };
+const purchaseSweet = async (req, res) => {
+    try {
+        const { sweetId, quantity } = req.body;
+
+        // Validate input
+        if (!sweetId || quantity == null) {
+            return res.status(400).json({ error: "sweetId and quantity are required" });
+        }
+
+        if (quantity <= 0) {
+            return res.status(400).json({ error: "Quantity must be greater than 0" });
+        }
+
+        const sweet = await Sweet.findById(sweetId);
+
+        if (sweet.quantity < quantity) {
+            return res.status(400).json({ error: "Insufficient quantity" });
+        }
+
+        sweet.quantity -= quantity;
+        await sweet.save();
+
+        return res.status(200).json({ message: "Purchase successful", sweet });
+    } catch (err) {
+        console.log("Error in purchasing sweet");
+        console.error(err);
+        return res.status(500).json({ error: "Server error" });
+    }
+}
+
+export { addSweet, deleteSweet, getSweets, purchaseSweet };

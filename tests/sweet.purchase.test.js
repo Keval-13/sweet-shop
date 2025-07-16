@@ -10,7 +10,13 @@ describe("POST /api/v1/sweet/purchase", () => {
     let sweetId;
 
     beforeAll(async () => {
-        const mongoServer = await MongoMemoryServer.create();
+        const mongoServer = await MongoMemoryServer.create(
+            {
+                binary: {
+                    downloadDir: 'E:/mongodb'
+                }
+            }
+        );
         await mongoose.connect(mongoServer.getUri());
 
         const sweet = await Sweet.create({
