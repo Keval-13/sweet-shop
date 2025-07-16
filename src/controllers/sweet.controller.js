@@ -10,8 +10,16 @@ const addSweet = async (req, res) => {
         }
 
         // check whether the value of price and quantity is as expected
-        if (price < 0 || quantity < 0) {
-            return res.status(400).json({ error: 'Price and quantity must be > 0' });
+        const parsedPrice = Number(price);
+        const parsedQuantity = Number(quantity);
+
+        // Validate numbers
+        if (isNaN(parsedPrice) || isNaN(parsedQuantity)) {
+            return res.status(400).json({ error: 'Price and quantity must be valid numbers' });
+        }
+
+        if (parsedPrice < 0 || parsedQuantity < 0) {
+            return res.status(400).json({ error: 'Price and quantity must be ≥ 0' });
         }
 
         const sweet = await Sweet.create({ name, category, price, quantity });
@@ -45,7 +53,7 @@ const deleteSweet = async (req, res) => {
 const getSweets = async (req, res) => {
     try {
         const sweetsRes = await Sweet.find({});
-    
+
         return res.status(200).json(sweetsRes);
     } catch (err) {
         console.log("Error in fetching sweets");

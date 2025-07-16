@@ -26,8 +26,8 @@ describe('POST /api/v1/sweets', () => {
         const payload = {
             name: 'Kaju Katli',
             category: 'Nut-Based',
-            quantity: "50",
-            price: "20"
+            quantity: 50,
+            price: 20
         };
 
         const res = await request(app)
@@ -43,8 +43,8 @@ describe('POST /api/v1/sweets', () => {
     it('rejects when fields are missing', async () => {
         const payload = {
             category: 'Nut-Based',
-            quantity: "50",
-            price: "20"
+            quantity: 50,
+            price: 20
         };
 
         const res = await request(app).post(endpoint).send(payload);
@@ -55,8 +55,8 @@ describe('POST /api/v1/sweets', () => {
         const payload = {
             name: 'Kaju Katli',
             category: 'Nut-Based',
-            quantity: "-50",
-            price: "-20"
+            quantity: -50,
+            price: -20
         };
 
         const res = await request(app).post(endpoint).send(payload);
