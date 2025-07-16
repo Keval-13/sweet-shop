@@ -4,7 +4,7 @@ import request from 'supertest';
 import { app } from '../src/app.js';
 import { Sweet } from '../src/model/sweet.model.js';
 
-describe('POST /api/v1/sweet/restock', () => {
+describe('PATCH /api/v1/sweet/restock', () => {
     const endpoint = '/api/v1/sweet/restock';
     let sweetId;
 
@@ -34,7 +34,7 @@ describe('POST /api/v1/sweet/restock', () => {
 
     it('returns 200 status and restock sweet', async () => {
         const res = await request(app)
-            .post(endpoint)
+            .patch(endpoint)
             .send({ sweetId, quantity: 30 });
 
         expect(res.statusCode).toBe(200);
@@ -42,7 +42,7 @@ describe('POST /api/v1/sweet/restock', () => {
 
     it('returns 400 for invalid quantity', async () => {
         const res = await request(app)
-            .post(endpoint)
+            .patch(endpoint)
             .send({ sweetId, quantity: -10 });
 
         expect(res.statusCode).toBe(400);
@@ -52,7 +52,7 @@ describe('POST /api/v1/sweet/restock', () => {
         const sweetId = new mongoose.Types.ObjectId();
 
         const res = await request(app)
-            .post(endpoint)
+            .patch(endpoint)
             .send({ sweetId, quantity: 10 });
 
         expect(res.statusCode).toBe(404);
@@ -60,7 +60,7 @@ describe('POST /api/v1/sweet/restock', () => {
 
     it('returns 400 for missing fields', async () => {
         const res = await request(app)
-            .post(endpoint)
+            .patch(endpoint)
             .send({ sweetId });
 
         expect(res.statusCode).toBe(400);
