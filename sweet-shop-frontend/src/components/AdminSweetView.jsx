@@ -153,7 +153,7 @@ function AdminSweetView() {
       </div>}
 
       {/* For add the sweets */}
-      <div className='w-full h-10 flex items-center'>
+      <div className='w-full flex items-center'>
         <form onSubmit={handleAddSweet} className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-2">
           <input type="text" placeholder="Sweet name"
             required
@@ -180,14 +180,14 @@ function AdminSweetView() {
             className="border h-full border-gray-300 px-3 py-2 rounded-md"
           />
           <button type='submit'
-            className='h-full flex justify-center items-center gap-2 cursor-pointer border border-gray-300 bg-blue-500 hover:bg-blue-500 text-white px-5 rounded-md duration-200'>
+            className='h-full py-2 flex justify-center items-center gap-2 cursor-pointer border border-gray-300 bg-blue-500 hover:bg-blue-500 text-white px-5 rounded-md duration-200'>
             <Plus size={16} />Add
           </button>
         </form>
       </div>
 
       {/* For showing the sweets */}
-      <div className="overflow-hidden border border-gray-300 rounded-md shadow-md">
+      <div className="overflow-hidden border border-gray-300 rounded-md shadow-md overflow-x-auto">
         <table className="min-w-full table-auto">
           <thead className="bg-blue-50 text-left">
             <tr className="first:rounded-t-md">

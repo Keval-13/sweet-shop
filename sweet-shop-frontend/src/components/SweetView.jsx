@@ -155,7 +155,7 @@ function SweetView() {
             </div>
 
             {/* To display sweets */}
-            <div className="overflow-hidden border border-gray-300 rounded-md shadow-md">
+            <div className="overflow-hidden overflow-x-auto border border-gray-300 rounded-md shadow-md">
                 <table className="min-w-full table-auto">
                     <thead className="bg-blue-50 text-left">
                         <tr className="first:rounded-t-md">
