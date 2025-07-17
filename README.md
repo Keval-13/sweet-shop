@@ -54,18 +54,26 @@ Content of `.env` is shown in `.env.example`
 
 ### 4. Run Backend and Frontend
 
-In two separate terminals:
+Open two separate terminals from project root: (./sweet-shop)
 
 Terminal 1 (Backend)
-```
-cd ../sweet-shop-backend
+```bash
+cd ./sweet-shop-backend
 npm run dev
 ```
 
 Terminal 2 (Frontend)
-```
+```bash
+cd ./sweet-shop-frontend
 npm run dev
 ```
+
+### 5. Open browser and search
+
+```
+http://localhost:5173/
+```
+
 ⚠️ Make sure update MongoDB URI for MongoDB Atlas.
 
 
@@ -85,6 +93,10 @@ Run & See [`test-report.html`](./sweet-shop-backend/test-report.html) for full t
 
 ---
 
+## 🧪 Test Report Screenshot
+
+![Test Report](assets/test-report.png)
+
 ## 🌐 Frontend Preview
 
 ![Frontend Screenshot 1](assets/frontend-1.png)
@@ -97,11 +109,8 @@ Run & See [`test-report.html`](./sweet-shop-backend/test-report.html) for full t
 
 ![Frontend Screenshot 5](assets/frontend-5.png)
 
-![Frontend Mobile View Screenshot 1](assets/mobile-view-1.png)
+## Frontend Mobile Preview
 
-![Frontend Mobile View Screenshot 2](assets/mobile-view-2.png)
+![Frontend Mobile View Screenshot 1](assets/mobile-preview-1.png)
 
-## 🧪 Test Report Screenshot
-
-![Test Report](assets/test-report.png)
-
+![Frontend Mobile View Screenshot 2](assets/mobile-preview-2.png)

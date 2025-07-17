@@ -81,7 +81,7 @@ function SweetView() {
                 <div
                     onClick={(e) => e.stopPropagation()}
                     className="flex flex-col gap-2 bg-white p-6 rounded-md shadow-md w-80">
-                    <h2 className="text-lg font-semibold mb-4">Are you sure ?</h2>
+                    <h2 className="text-lg font-semibold mb-4">Sweet purchase</h2>
                     <input
                         type="text"
                         placeholder="Enter quantity..."
@@ -90,18 +90,18 @@ function SweetView() {
                         onChange={(e) => setQuantity(e.target.value)}
                     />
                     <button onClick={handlePurchase}
-                        className='w-full cursor-pointer border border-gray-300 px-3 py-2 rounded-md bg-green-400 hover:bg-green-500 text-white'
+                        className='w-full cursor-pointer border border-gray-300 px-3 py-2 rounded-md bg-green-500 hover:bg-green-600 text-white'
                     >Purchase
                     </button>
                     <button onClick={() => setModal(false)}
-                        className='w-full cursor-pointer border border-gray-300 px-3 py-2 rounded-md bg-red-400 hover:bg-red-500 text-white'
+                        className='w-full cursor-pointer border border-gray-300 px-3 py-2 rounded-md bg-red-500 hover:bg-red-600 text-white'
                     >Cancel
                     </button>
                 </div>
             </div>}
 
             {/* For filter and search */}
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-2">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-4">
                 {/* Name Search */}
                 <input
                     type="text"

@@ -7,7 +7,7 @@ export default function Home() {
     const [activeTab, setActiveTab] = useState("buy-sweet");
 
     return (
-        <div className='h-screen w-screen flex flex-col items-center bg-neutral-50'>
+        <div className='h-screen w-screen flex flex-col items-center bg-neutral-50 font-montserrat'>
             <div className="text-center mb-4 pt-5">
                 <h1 className="text-3xl font-bold text-gray-800 mb-2">Sweet Shop</h1>
             </div>
